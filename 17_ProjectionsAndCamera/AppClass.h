@@ -24,6 +24,12 @@ class Application
 	MyCamera* m_pCamera = nullptr; //camera we will use in this application
 
 	String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
+
+	vector3 m_v3Pos;
+
+	vector3 cameraPos;
+	vector3 cameraTarget;
+	vector3 cameraUp;
 private:
 	static ImGuiObject gui; //GUI object
 

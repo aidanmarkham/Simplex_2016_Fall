@@ -385,6 +385,19 @@ void Application::ProcessKeyboard(void)
 
 	if (fMultiplier)
 		fSpeed *= 5.0f;
+	vector3 movement = vector3(0, 10, 0);
+
+	vector3 cameraPos = m_pCamera->GetPosition();
+	vector3 cameraTarget = m_pCamera->GetTarget();
+	vector3 cameraUp = m_pCamera->GetUp();
+
+	/*
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		m_pCamera->SetPositionTargetAndUp(cameraPos, cameraTarget, cameraUp);
+	}
+	*/
+	m_pCamera->SetPositionTargetAndUp(cameraPos, cameraTarget, cameraUp);
+
 #pragma endregion
 }
 //Joystick

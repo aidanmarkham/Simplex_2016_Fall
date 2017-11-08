@@ -3,7 +3,7 @@ using namespace Simplex;
 void Application::InitVariables(void)
 {
 	////Change this to your name and email
-	//m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
+	//m_sProgrammer = "Aidan Markham - apm4337@rit.edu";
 
 	////Alberto needed this at this position for software recording.
 	//m_pWindow->setPosition(sf::Vector2i(710, 0));
@@ -57,21 +57,29 @@ void Application::Display(void)
 		break;
 	case 2:
 		m_pCamera->ResetCamera();
+		m_pCamera->SetPerspective(false);
 		break;
 	case 3:
 		m_pCamera->ResetCamera();
+		m_pCamera->SetPositionTargetAndUp(vector3(50, 0, 0), vector3(), vector3(0, 0, -10));
 		break;
 	case 4:
 		m_pCamera->ResetCamera();
+		m_pCamera->SetPositionTargetAndUp(vector3(0, 0, -20), vector3(), vector3(0, 10,0 ));
 		break;
 	case 5:
 		m_pCamera->ResetCamera();
+		m_pCamera->SetPositionTargetAndUp(vector3(0, 0, -20), vector3(), vector3(0, 10, 0));
+		m_pCamera->SetNearFar(vector2(10, 50));
 		break;
 	case 6:
 		m_pCamera->ResetCamera();
+		m_pCamera->SetPositionTargetAndUp(vector3(0, 0, -20), vector3(), vector3(0, 10, 0));
+		m_pCamera->SetNearFar(vector2(.05f, 15));
 		break;
 	case 7:
 		m_pCamera->ResetCamera();
+		m_pCamera->SetPositionTargetAndUp(vector3(0, 0, 10), vector3(0, 0, -10), vector3(0, -10, 0));
 		break;
 	}
 

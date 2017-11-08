@@ -8,7 +8,7 @@ void Application::ProcessMouseMovement(sf::Event a_event)
 	sf::Vector2i window = m_pWindow->getPosition();
 	m_v3Mouse.x = static_cast<float>(mouse.x - window.x);
 	m_v3Mouse.y = static_cast<float>(mouse.y - window.y);
-	if(!m_pSystem->IsWindowFullscreen() && !m_pSystem->IsWindowBorderless())
+	if (!m_pSystem->IsWindowFullscreen() && !m_pSystem->IsWindowBorderless())
 		m_v3Mouse += vector3(-8.0f, -32.0f, 0.0f);
 	gui.io.MousePos = ImVec2(m_v3Mouse.x, m_v3Mouse.y);
 }
@@ -397,23 +397,34 @@ void Application::ProcessKeyboard(void)
 	if (fMultiplier)
 		fSpeed *= 5.0f;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		m_pCameraMngr->MoveForward(fSpeed);
+		m_v3Pos.z += 0.1f;
+	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		m_pCameraMngr->MoveForward(-fSpeed);
+		m_v3Pos.z -= 0.1f;
+	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
 		m_pCameraMngr->MoveSideways(-fSpeed);
-
+		m_v3Pos.x += 0.1f;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
 		m_pCameraMngr->MoveSideways(fSpeed);
-
+		m_v3Pos.x -= 0.1f;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+	{
 		m_pCameraMngr->MoveVertical(-fSpeed);
-
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	{
 		m_pCameraMngr->MoveVertical(fSpeed);
+	}
 #pragma endregion
 }
 //Joystick

@@ -22,7 +22,8 @@ void Application::InitVariables(void)
 	//Get the singleton
 	m_pMyMeshMngr = MyMeshManager::GetInstance();
 	m_pMyMeshMngr->SetCamera(m_pCamera);
-	
+	m_pMesh = new MyMesh();
+	m_pMesh->GenerateTube(1.0f, 0.7f, 2.0f, 10, C_GREEN);
 	
 }
 void Application::Update(void)
@@ -37,6 +38,7 @@ void Application::Update(void)
 	CameraRotation();
 
 	//Add objects to the Manager
+	/*
 	uint nCount = 0;
 	for (int j = -420; j < 420; j += 2)
 	{
@@ -47,12 +49,16 @@ void Application::Update(void)
 		}
 	}
 	m_pMeshMngr->Print("Objects: " + std::to_string(nCount) + "\n", C_BLUE);
+	*/
 }
 void Application::Display(void)
 {
 	//Clear the screen
 	ClearScreen();
 
+	for (int i = 0; i < 100; i++) {
+		m_pMesh->Render(m_pCamera, glm::translate(IDENTITY_M4, vector3(1.0f*i, 0.0f, 0.0f)) * ToMatrix4(m_qArcBall));
+	}
 	//Render the list of MyMeshManager
 	m_pMyMeshMngr->Render();
 
