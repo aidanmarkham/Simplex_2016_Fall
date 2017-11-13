@@ -11,6 +11,44 @@ void Application::ProcessMouseMovement(sf::Event a_event)
 	if(!m_pSystem->IsWindowFullscreen() && !m_pSystem->IsWindowBorderless())
 		m_v3Mouse += vector3(-8.0f, -32.0f, 0.0f);
 	gui.io.MousePos = ImVec2(m_v3Mouse.x, m_v3Mouse.y);
+
+
+	
+	/*
+	if (a_event.mouseButton.button == sf::Mouse::Button::Right) {
+	
+
+		//Get the pixel location of the center of the window relative to the window
+		sf::Vector2i centerScreen = sf::Vector2i(0, 0);
+		centerScreen.x = m_pWindow->getSize().x / 2;
+		centerScreen.y = m_pWindow->getSize().y / 2;
+
+		//calculate the offset between the mouse and the center
+		vector2 offset = vector2(0, 0);
+		offset.x = m_v3Mouse.x - centerScreen.x;
+		offset.y = m_v3Mouse.y - centerScreen.y;
+
+		//put the mouse in the center
+
+		sf::Mouse::setPosition(centerScreen, *m_pWindow);
+
+
+		std::cout << "X: " << offset.x << " Y: " << offset.y << std::endl;
+
+
+
+		vector3 cameraPos = m_pCamera->GetPosition();
+		vector3 forward = m_pCamera->GetTarget();
+		vector3 cameraUp = m_pCamera->GetUp();
+
+		//forward.x += offset.x;
+
+		m_pCamera->SetPositionTargetAndUp(cameraPos, forward, cameraUp - cameraPos);
+	}
+	*/
+
+	
+
 }
 void Application::ProcessMousePressed(sf::Event a_event)
 {
@@ -369,6 +407,25 @@ void Application::CameraRotation(float a_fSpeed)
 		fAngleX += fDeltaMouse * a_fSpeed;
 	}
 	//Change the Yaw and the Pitch of the camera
+
+	
+	//get info about the camera
+	vector3 cameraPos = m_pCamera->GetPosition();
+	vector3 cameraUp = m_pCamera->GetUp();
+
+	//get formard and right
+	vector3 forward = m_pCamera->GetTarget() - cameraPos;
+	vector3 right = glm::cross(forward, cameraUp);
+
+	//rotate forward around the camera's location, based on the delta angles
+	forward = glm::rotate(forward, -fAngleX * 5, right);
+	forward = glm::rotate(forward, fAngleY * 5, cameraUp);
+
+	//apply camera changes
+	m_pCamera->SetPositionTargetAndUp(cameraPos, cameraPos+forward, cameraUp - cameraPos);
+
+
+
 	SetCursorPos(CenterX, CenterY);//Position the mouse in the center
 }
 //Keyboard
@@ -385,18 +442,44 @@ void Application::ProcessKeyboard(void)
 
 	if (fMultiplier)
 		fSpeed *= 5.0f;
-	vector3 movement = vector3(0, 10, 0);
 
+	// vec3 to hold the relative movement
+	vector3 movement = vector3(0, 0, 0);
+
+
+	//get info about the camera
 	vector3 cameraPos = m_pCamera->GetPosition();
 	vector3 cameraTarget = m_pCamera->GetTarget();
+	vector3 forward = cameraTarget - cameraPos;
+	
+	//calculate up and right vectors
 	vector3 cameraUp = m_pCamera->GetUp();
+	vector3 right = glm::cross(forward, cameraUp);
+	
 
-	/*
+	//affect movement based on keyboard input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		m_pCamera->SetPositionTargetAndUp(cameraPos, cameraTarget, cameraUp);
+		movement += forward * fSpeed;
 	}
-	*/
-	m_pCamera->SetPositionTargetAndUp(cameraPos, cameraTarget, cameraUp);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		movement -= forward * fSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		movement -= right * fSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		movement += right * fSpeed;
+	}
+	
+	//update position and target
+	cameraPos += movement;
+	cameraTarget += movement;
+
+	//lock up to up
+	cameraUp = vector3(0, 1.0f, 0);
+
+	//set values
+	m_pCamera->SetPositionTargetAndUp(cameraPos, cameraTarget, cameraUp - cameraPos);
 
 #pragma endregion
 }
