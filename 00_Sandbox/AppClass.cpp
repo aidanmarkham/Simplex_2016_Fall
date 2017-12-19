@@ -2,6 +2,9 @@
 using namespace Simplex;
 void Application::InitVariables(void)
 {
+	////Alberto needed this at this position for software recording.
+	//m_pWindow->setPosition(sf::Vector2i(710, 0));
+
 	//Music
 	String sRoute = m_pSystem->m_pFolder->GetFolderData();
 	sRoute += m_pSystem->m_pFolder->GetFolderAudio();
@@ -81,7 +84,7 @@ void Application::InitVariables(void)
 
 	//load model
 	m_pModel = new Simplex::Model();
-	m_pModel->Load("Lego\\Unikitty.BTO");
+	m_pModel->Load("Minecraft\\Steve.obj");
 #pragma endregion
 }
 void Application::Update(void)

@@ -2,11 +2,16 @@
 using namespace Simplex;
 void Application::InitVariables(void)
 {
+<<<<<<< HEAD
 	////Change this to your name and email
 	m_sProgrammer = "Aidan Markham - apm4337@rit.edu";
 
 	////Alberto needed this at this position for software recording.
 	//m_pWindow->setPosition(sf::Vector2i(710, 0));
+=======
+	//Change this to your name and email
+	m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
+>>>>>>> f0a673086f3a97669e12e48c57c380ce4ad53478
 
 	//Set the position and target of the camera
 	//(I'm at [0,0,10], looking at [0,0,0] and up is the positive Y axis)

@@ -31,6 +31,8 @@ void Application::InitVariables(void)
 	}
 	m_uOctantLevels = 1;
 	m_pEntityMngr->Update();
+	aabb = &AABB(vector3(-50, -50, -50),vector3(50,50,50) );
+	m_pRoot = &MyOctant(m_uOctantLevels, aabb, m_pEntityMngr, m_pMeshMngr);
 }
 void Application::Update(void)
 {
@@ -54,12 +56,14 @@ void Application::Display(void)
 	// Clear the screen
 	ClearScreen();
 
-	//display octree
-	//m_pRoot->Display();
+	
 	
 	// draw a skybox
 	m_pMeshMngr->AddSkyboxToRenderList();
 	
+	//display octree
+	m_pRoot->Display();
+
 	//render list call
 	m_uRenderCallCount = m_pMeshMngr->Render();
 
